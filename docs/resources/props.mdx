@@ -1,0 +1,220 @@
+---
+name: Props
+route: /Props
+---
+
+import { Playground } from "docz";
+import ReactStructuredQuerySearch from "react-structured-query-search-suggestions";
+import "react-structured-query-search-suggestions/dist/index.css";
+
+# Props
+
+## Dynamic/Static Options (dynamicOptions:Boolean)  
+
+<Playground>
+	{() => {
+		class ExampleButton extends React.Component {
+			constructor(props) {
+				super(props);
+				this.state = {
+					options:[
+						{
+							category: "Dynamic Options",
+							type: "textoptions",
+							operator: ["==", "!="],
+							options: ['example1', 'example2'],
+							dynamicOptions:true
+						},
+						{
+							category: "Static options",
+							type: "textoptions",
+							operator: ["==", "!="],
+							options: ['example1', 'example2'],
+						}
+					]
+				};
+				this.fetchOptions = this.fetchOptions.bind(this)
+			}
+
+			// dynamic options API search function
+			fetchOptions(category, search) {
+				const searchTerm = search !=='' ? search : 'demo'
+				const option = this.state.options.find(item=>{
+					return item.category===category
+				})
+				if(!option.dynamicOptions){
+					return option.options
+				}
+				
+				fetch(
+				`https://api.github.com/search/users?q=${searchTerm}`,
+				{
+					method: 'GET'
+				}
+				)
+				.then(r => r.json())
+				.then(r => {
+					const logins = r.items.map(r=>r.login)
+					this.setState({options: this.state.options.map(item=>{
+						return item.category===category ? {...item, options:logins} : item 
+					})})
+				})
+				.catch(error => {
+					console.error(error);
+					return []
+				});
+			}
+
+			render() {
+				const { inverted } = this.state;
+				return (
+				<ReactStructuredQuerySearch
+					categoryHeader="Custom Category"
+					options={this.state.options}
+					onTokenAdd={val => console.log(val)}
+					fetchData={this.fetchOptions}
+				/>
+				)
+			}
+		}
+		return <ExampleButton />;
+	}
+}
+	
+</Playground>
+
+## categoryHeader
+
+<Playground>
+	<ReactStructuredQuerySearch
+		categoryHeader="Custom Category"
+		options={[
+			{
+				category: "Country",
+				type: "textoptions",
+				options: ["India", "London"]
+			}
+		]}
+		onTokenAdd={val => console.log(val)}
+	/>
+</Playground>
+
+## operatorHeader
+
+<Playground>
+	<ReactStructuredQuerySearch
+    	isAllowOperator={true}
+		operatorHeader="Custom Operator"
+		options={[
+			{
+				category: "Country",
+				type: "textoptions",
+				options: ["India", "London"]
+			}
+		]}
+		onTokenAdd={val => console.log(val)}
+	/>
+</Playground>
+
+## valueHeader
+
+<Playground>
+
+    <ReactStructuredQuerySearch
+    	valueHeader="Custom Value"
+    	options={[{
+    			category: "Country",
+    			type: "textoptions",
+    			options: ["India","London"]
+    		}]}
+    	onTokenAdd={val => console.log(val)}
+    />
+
+</Playground>
+
+## isAllowOperator
+
+<Playground>
+
+    <ReactStructuredQuerySearch
+    	isAllowOperator={true}
+    	options={[{
+    			category: "Industry",
+    			type: "textoptions",
+    			options: ()=>{
+    				return ["Business Services", "Other Specialty Stores"]
+    			}
+    		}]}
+    	onTokenAdd={val => console.log(val)}
+    />
+
+</Playground>
+
+## fuzzySearchEmptyMessage
+
+<Playground>
+
+    <ReactStructuredQuerySearch
+    	fuzzySearchEmptyMessage="Custom Empty Message"
+    	options={[{
+    			category: "Industry",
+    			type: "textoptions",
+    			options: ()=>{
+    				return ["Business Services", "Other Specialty Stores"]
+    			}
+    		}]}
+    	onTokenAdd={val => console.log(val)}
+    />
+
+</Playground>
+
+## renderTokens
+
+<Playground>
+
+    <ReactStructuredQuerySearch
+    	options={[{
+    			category: "Industry",
+    			type: "textoptions",
+    			options: ()=>{
+    				return ["Business Services", "Other Specialty Stores"]
+    			}
+    		}]}
+    	onTokenAdd={val => console.log(val)}
+    />
+
+</Playground>
+
+## renderTokenItem
+
+<Playground>
+
+    <ReactStructuredQuerySearch
+    	options={[{
+    			category: "Industry",
+    			type: "textoptions",
+    			options: ()=>{
+    				return ["Business Services", "Other Specialty Stores"]
+    			}
+    		}]}
+    	onTokenAdd={val => console.log(val)}
+    />
+
+</Playground>
+
+## renderSearchItem
+
+<Playground>
+
+    <ReactStructuredQuerySearch
+    	options={[{
+    			category: "Industry",
+    			type: "textoptions",
+    			options: ()=>{
+    				return ["Business Services", "Other Specialty Stores"]
+    			}
+    		}]}
+    	onTokenAdd={val => console.log(val)}
+    />
+
+</Playground>

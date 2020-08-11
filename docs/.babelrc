@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "lodash",  
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-syntax-dynamic-import"],
+  "presets": [
+    "preset-env",
+    "@babel/preset-react"
+  ]
+}
