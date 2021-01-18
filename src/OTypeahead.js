@@ -16,7 +16,7 @@ export default class OTypeahead extends Typeahead {
 		});
 	}
 
-	_onOptionSelected(option) {
+	_onOptionSelected(option, setVisible=true) {
 		if (option !== this.props.fuzzySearchEmptyMessage) {
 			var nEntry = this.entryRef;
 			nEntry.focus();
@@ -30,7 +30,7 @@ export default class OTypeahead extends Typeahead {
 				selection: option,
 				entryValue: option
 			});
-			this.props.onOptionSelected(option);
+			this.props.onOptionSelected(option, !setVisible);
 		}
 	}
 

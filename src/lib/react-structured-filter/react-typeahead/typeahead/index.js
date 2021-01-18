@@ -167,7 +167,7 @@ export default class Typeahead extends Component {
     );
   }
 
-  _onOptionSelected(option) {
+  _onOptionSelected(option, setVisible=true) {
     var nEntry = this.entryRef;
     nEntry.focus();
     nEntry.value = option;
@@ -176,7 +176,7 @@ export default class Typeahead extends Component {
       selection: option,
       entryValue: option
     });
-    this.props.onOptionSelected(option);
+    this.props.onOptionSelected(option, !setVisible);
   }
 
   _onTextEntryUpdated = () => {
@@ -196,12 +196,18 @@ export default class Typeahead extends Component {
   };
 
   _onEnter = event => {
-    if (this.selRef && this.selRef) {
-      if (!this.selRef.state.selection) {
-        return this.props.onKeyDown(event);
+    if (this.selRef || (this.props.category==='' && !this.props.isAllowFreeSearch)) {
+      if(!this.selRef){
+        if(this.props.category === '' && !this.props.isAllowFreeSearch){
+          this._onOptionSelected(this.state.entryValue, false);
+        }
+      }else{
+        if (!this.selRef.state.selection) {
+          return this.props.onKeyDown(event);
+        }
+        this._onOptionSelected(this.selRef.state.selection);
+        this.selRef.setSelectionIndex(null);
       }
-
-      this._onOptionSelected(this.selRef.state.selection);
     }
   };
 
@@ -216,7 +222,7 @@ export default class Typeahead extends Component {
 
   eventMap(event) {
     var events = {};
-    if (this.selRef && this.selRef) {
+    if (this.selRef) {
       events[KeyEvent.DOM_VK_UP] = this.selRef.navUp;
       events[KeyEvent.DOM_VK_DOWN] = this.selRef.navDown;
     }
@@ -241,7 +247,7 @@ export default class Typeahead extends Component {
 
     // If there are no visible elements, don't perform selector navigation.
     // Just pass this up to the upstream onKeydown handler
-    if (!this.selRef) {
+    if (!this.selRef && (this.props.category!==''  && !this.props.isAllowFreeSearch)) {
       return this.props.onKeyDown(event);
     }
 

@@ -14,6 +14,9 @@ export default class OTokenizer extends Tokenizer {
 		}
 		let selectedValueSet = {};
 		defaultValue.forEach(val => {
+			if(val.isAllowFreeSearch){
+				this.setState({isAllowFreeSearch:true})
+			}
 			if (selectedValueSet[val.category]) {
 				selectedValueSet[val.category].push(val);
 			} else {
@@ -22,7 +25,7 @@ export default class OTokenizer extends Tokenizer {
 		});
 		this.props.options.forEach(val => {
 			if (selectedValueSet[val.category]) {
-				// escape category if options is not avilable.
+				// escape category if options is not available.
 				this._getOptions({ options: val.options, category: val.category, selected: selectedValueSet[val.category], fromDefaultValue: true });
 			}
 		});
@@ -133,7 +136,7 @@ export default class OTokenizer extends Tokenizer {
 	}
 
 	filterOptionsValue({ options, category = this.state.category, selected = this.state.selected, fromDefaultValue }) {
-		if (this._getAllowDuplicateOptions({ constategory: category }) == false) {
+		if (this._getAllowDuplicateOptions({ category: category }) == false) {
 			if (selected.length && category != "") {
 				let optionsList = [];
 				if (options && options.length) {
@@ -148,7 +151,7 @@ export default class OTokenizer extends Tokenizer {
 						});
 					}
 					let fuzzySearchKeyAttribute = this._getFuzzySearchKeyAttribute({
-						category: category
+						category
 					});
 					options.forEach(val => {
 						let foundOption = listToFindOptionOnIt.find(o => {
@@ -189,10 +192,8 @@ export default class OTokenizer extends Tokenizer {
 			return this.props.categoryHeader || "Category";
 		} else if (this.props.isAllowOperator && this.state.operator == "") {
 			return this.props.operatorHeader || "Operator";
-		} else {
-			return this.props.valueHeader || "Value";
-		}
-		return this.props.options;
+		} 
+		return this.props.valueHeader || "Value";
 	}
 
 	_getAllowDuplicateCategories({ category, options = this.props.options }) {
@@ -214,9 +215,8 @@ export default class OTokenizer extends Tokenizer {
 					return options[i].isAllowDuplicateOptions || false;
 				}
 			}
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	_getAllowCustomValue({ category, options = this.props.options }) {
@@ -226,9 +226,8 @@ export default class OTokenizer extends Tokenizer {
 					return options[i].isAllowCustomValue || false;
 				}
 			}
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	_getFuzzySearchKeyAttribute({ category, options = this.props.options }) {
@@ -263,6 +262,9 @@ export default class OTokenizer extends Tokenizer {
 		}
 
 		let removedObj = this.state.selected.splice(index, 1)[0];
+		if(removedObj.isAllowFreeSearch){
+			this.setState({ isAllowFreeSearch: false });
+		}
 		if (this.skipCategorySet && this.skipCategorySet.has(removedObj.category)) {
 			this.skipCategorySet.delete(removedObj.category);
 		}
@@ -284,29 +286,41 @@ export default class OTokenizer extends Tokenizer {
 		return;
 	};
 
-	_addTokenForValue = value => {
+	_addTokenForValue = (value, isAllowFreeSearch = false) => {
 		if (this.props.disabled) {
 			return;
 		}
 		const { isAllowOperator } = this.props;
-		if (this.state.category == "") {
-			this.state.category = value;
-			this.setState({ category: value });
+		if(isAllowFreeSearch){
+			this.state.category = 'search';
+			this.state.operator = 'free';
+			this.setState({ category: 'search', operator: 'free', isAllowFreeSearch:true });
 			this.typeaheadRef.setEntryText("");
-			return;
-		}
+			value = {
+				category: this.state.category,
+				isAllowFreeSearch:true,
+				value
+			};
+		}else{
+			if (this.state.category == "") {
+				this.state.category = value;
+				this.setState({ category: value });
+				this.typeaheadRef.setEntryText("");
+				return;
+			}
+	
+			if (isAllowOperator && this.state.operator == "") {
+				this.state.operator = value;
+				this.setState({ operator: value });
+				this.typeaheadRef.setEntryText("");
+				return;
+			}
 
-		if (isAllowOperator && this.state.operator == "") {
-			this.state.operator = value;
-			this.setState({ operator: value });
-			this.typeaheadRef.setEntryText("");
-			return;
+			value = {
+				category: this.state.category,
+				value
+			};
 		}
-
-		value = {
-			category: this.state.category,
-			value: value
-		};
 
 		this.state.selected.push(value);
 
@@ -383,6 +397,9 @@ export default class OTokenizer extends Tokenizer {
 				customClasses={this.props.customClasses}
 				options={this._getOptionsForTypeahead()}
 				header={this._getHeader()}
+				category={this.state.category}
+				operator={this.state.operator}
+				isAllowFreeSearch={this.state.isAllowFreeSearch ? this.state.isAllowFreeSearch : false}
 				datatype={this._getInputType()}
 				isAllowCustomValue={this._getAllowCustomValue({
 					category: this.state.category
