@@ -15,7 +15,7 @@ export default class OTokenizer extends Tokenizer {
 		let selectedValueSet = {};
 		defaultValue.forEach(val => {
 			if(val.isAllowFreeSearch){
-				this.setState({isAllowFreeSearch:true})
+				this.state.isAllowFreeSearch=true
 			}
 			if (selectedValueSet[val.category]) {
 				selectedValueSet[val.category].push(val);

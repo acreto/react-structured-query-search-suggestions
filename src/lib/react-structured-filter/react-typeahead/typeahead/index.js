@@ -203,7 +203,14 @@ export default class Typeahead extends Component {
         }
       }else{
         if (!this.selRef.state.selection) {
-          return this.props.onKeyDown(event);
+          if(this.props.category === '' && !this.props.isAllowFreeSearch){
+            if(this.state.entryValue){
+              this._onOptionSelected(this.state.entryValue, false);
+            }
+            return
+          }else{
+            return this.props.onKeyDown(event);
+          }
         }
         this._onOptionSelected(this.selRef.state.selection);
         this.selRef.setSelectionIndex(null);
@@ -238,7 +245,9 @@ export default class Typeahead extends Component {
     if (event.keyCode === KeyEvent.DOM_VK_RETURN || event.keyCode === KeyEvent.DOM_VK_ENTER) {
       // If no options were provided so we can match on anything
       if (this.props.options.length === 0) {
-        this._onOptionSelected(this.state.entryValue);
+        if(this.state.entryValue){
+          this._onOptionSelected(this.state.entryValue);
+        }
       } else if (this.props.options.indexOf(this.state.entryValue) > -1 || (this.state.entryValue.trim() != "" && this.props.isAllowCustomValue)) {
         // If what has been typed in is an exact match of one of the options
         this._onOptionSelected(this.state.entryValue);
