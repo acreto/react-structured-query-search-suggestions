@@ -9,6 +9,58 @@ import "react-structured-query-search-suggestions/dist/index.css";
 
 # Props
 
+
+## defaultSelected 
+
+<Playground>
+	{() => {
+		class ExampleButton extends React.Component {
+			constructor(props) {
+				super(props);
+				this.state = {
+					options:[
+						{
+							category: "Static options",
+							type: "textoptions",
+							operator: ["==", "!="],
+							options: ['example1', 'example2'],
+						},
+						{
+							category: "Country",
+							type: "textoptions",
+							options: ["India", "London"]
+						}
+					]
+				};
+			}
+			
+			render() {
+				return (
+					<ReactStructuredQuerySearch
+						defaultSelected = {[{
+							category:"search",
+							operator:"free",
+							isAllowFreeSearch:true,
+							value:"searchterm"
+						},
+						{
+							category: "Country",
+							operator: "=",
+							value: "London"
+						}]}
+						options={this.state.options}
+						isAllowOperator={true}
+						onTokenAdd={val => console.log(val)}
+					/>
+				)
+			}
+		}
+		return <ExampleButton />;
+	}
+}
+	
+</Playground>
+
 ## Dynamic/Static Options (dynamicOptions:Boolean)  
 
 <Playground>
@@ -66,7 +118,6 @@ import "react-structured-query-search-suggestions/dist/index.css";
 			}
 
 			render() {
-				const { inverted } = this.state;
 				return (
 				<ReactStructuredQuerySearch
 					categoryHeader="Custom Category"

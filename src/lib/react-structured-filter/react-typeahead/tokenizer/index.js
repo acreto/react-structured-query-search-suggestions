@@ -184,7 +184,9 @@ export default class TypeaheadTokenizer extends Component {
     if (index == -1) {
       return;
     }
-
+    if(this.state.selected[index].isAllowFreeSearch){
+      this.setState({ isAllowFreeSearch: false });
+    }
     this.state.selected.splice(index, 1);
     this.setState({ selected: this.state.selected });
     this.props.onTokenRemove(this.state.selected);
@@ -208,7 +210,7 @@ export default class TypeaheadTokenizer extends Component {
     value = {
       category: this.state.category,
       operator: this.state.operator,
-      value: value
+      value
     };
 
     this.state.selected.push(value);

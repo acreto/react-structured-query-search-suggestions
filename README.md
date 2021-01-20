@@ -1,6 +1,6 @@
 # react-structured-query-search-suggestions 🎉
 
-[![NPM](https://img.shields.io/badge/npm-v1.0.0-orange)](https://www.npmjs.com/package/react-structured-query-search-suggestions) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/badge/npm-v1.0.2-orange)](https://www.npmjs.com/package/react-structured-query-search-suggestions) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 react-structured-query-search-suggestions is a javascript library that provides autocomplete search queries with dynamic/static suggestions.
 This was inspired by [visualsearch](http://documentcloud.github.io/visualsearch), [react-structured-filter](https://github.com/SummitRoute/react-structured-filter) and [react-structured-query-search](https://github.com/kevalbhatt/react-structured-query-search).
@@ -10,6 +10,7 @@ You can use all the [react-typeahead](https://github.com/fmoo/react-typeahead), 
 
 ## 🎉🎊 Features 🎊🎉
 
+* Allows user to search without any category & operator (Free text search) for maximum of one search term 
 * Ajax support to retrieve values incrementally as the user types
 * Allows user to send values for Category in `Array<String>` or `Array<Object>`
 * Allows user to pass custom loader component.
@@ -65,7 +66,7 @@ import "react-structured-query-search-suggestions/dist/index.css";
 | **customClasses** | `Object`||Allowed Keys: <ul><li>`input`</li><li>`results`</li><li>`listItem`</li><li>`listAnchor`</li><li>`hover`</li><li>`typeahead`</li><li>`resultsTruncated`</li><li>`token`</li></ul><div>An object containing custom class names for child elements. Useful for integrating with 3rd party UI kits.</div>|
 | **placeholder** | `String` || Placeholder text for the typeahead input.|
 | :new: **disabled** | `Boolean`| `false` | Set to `true` for disabling the StructureQuerySearch |
-| :new: **defaultSelected**| `function, Array` | `[]` | Allows user to initialize the search with selected values |
+| :new: **defaultSelected**| `function, Array` | `[]` | Allows user to initialize the search with selected values (Include isAllowFreeSearch:true in the free search term selected option) |
 | :new: **categoryHeader** | `String, Component` | `"Category"` | Allows user the change the header title of `Category` |
 | :new: **operatorHeader** | `String, Component` | `"Operator"` | Allows user the change the header title of `Operator` |
 | :new: **valueHeader** | `String, Component` | `"Value"` | Allows user the change the header title of `Value` |

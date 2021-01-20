@@ -30,7 +30,7 @@ export default class Token extends Component {
   }
 
   getTokenValue() {
-    let value = this.props.children["value"];
+    const value = this.props.children["value"];
     if (value && typeof value == "object") {
       return value[this.props.fuzzySearchKeyAttribute];
     } else {
@@ -42,7 +42,10 @@ export default class Token extends Component {
     if (this.props.renderTokenItem) {
       return this.props.renderTokenItem(this.props);
     } else {
-      let val = this.props.children;
+      const val = this.props.children;
+      if(val["isAllowFreeSearch"]){
+        return this.getTokenValue()
+      }
       return `${val["category"]} ${val.operator == undefined ? "" : val.operator} "${this.getTokenValue()}" `;
     }
   }

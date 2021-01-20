@@ -42,8 +42,13 @@ class Calendar extends Component {
   }
 
   handleDayClick(day) {
+    const time = new Date(this.state.selected._date);
     this.setState({
-      selected: day
+      selected: day.set({
+        hour:getHours(time),
+        minute:getMinutes(time),
+        second:getSeconds(time)
+      })
     })
   }
 
