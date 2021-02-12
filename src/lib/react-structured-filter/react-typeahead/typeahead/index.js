@@ -207,13 +207,14 @@ export default class Typeahead extends Component {
             if(this.state.entryValue){
               this._onOptionSelected(this.state.entryValue, false);
             }
-            return
+            return;
           }else{
             return this.props.onKeyDown(event);
           }
+        }else{
+          this._onOptionSelected(this.selRef.state.selection);
+          this.selRef.setSelectionIndex(null);
         }
-        this._onOptionSelected(this.selRef.state.selection);
-        this.selRef.setSelectionIndex(null);
       }
     }
   };
@@ -251,6 +252,8 @@ export default class Typeahead extends Component {
       } else if (this.props.options.indexOf(this.state.entryValue) > -1 || (this.state.entryValue.trim() != "" && this.props.isAllowCustomValue)) {
         // If what has been typed in is an exact match of one of the options
         this._onOptionSelected(this.state.entryValue);
+        this.selRef.setSelectionIndex(null);
+        return
       }
     }
 

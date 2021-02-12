@@ -165,21 +165,21 @@ export default class OTokenizer extends Tokenizer {
 							optionsList.push(val);
 						}
 					});
-					if (
-						(fromDefaultValue && optionsList.length === 0) ||
-						(!fromDefaultValue &&
-							((options.length > optionsList.length && optionsList.length == 1) || (options.length == 1 && optionsList.length == 1)))
-					) {
-						this.skipCategorySet.add(category);
-					}
+					// if (
+					// 	(fromDefaultValue && optionsList.length === 0) ||
+					// 	(!fromDefaultValue &&
+					// 		((options.length > optionsList.length && optionsList.length == 1) || (options.length == 1 && optionsList.length == 1)))
+					// ) {
+					// 	this.skipCategorySet.add(category);
+					// }
 					return optionsList;
 				} else {
 					return [];
 				}
 			} else {
-				if (options.length === 1 && category) {
-					this.skipCategorySet.add(category);
-				}
+				// if (options.length === 1 && category) {
+				// 	this.skipCategorySet.add(category);
+				// }
 				return options || [];
 			}
 		} else {
