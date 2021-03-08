@@ -30,10 +30,6 @@ export default class TypeaheadSelector extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ selectionIndex: null });
-  }
-
   setSelectionIndex(index) {
     this.setState({
       selectionIndex: index,
@@ -72,7 +68,18 @@ export default class TypeaheadSelector extends Component {
       newIndex -= this.props.options.length;
     }
     var newSelection = this.getSelectionForIndex(newIndex);
-    this.setState({ selectionIndex: newIndex, selection: newSelection });
+    this.setState({ selectionIndex: newIndex, selection: newSelection },()=>{
+      if(document.getElementsByClassName("typeahead-selector filter-tokenizer-list__container").length &&
+        document.getElementsByClassName('hover filter-tokenizer-list__item').length
+      ){
+        document.getElementsByClassName("typeahead-selector filter-tokenizer-list__container")[0]
+        .scrollTop = 0; 
+        document.getElementsByClassName("typeahead-selector filter-tokenizer-list__container")[0]
+        .scrollTop =
+          document.getElementsByClassName('hover filter-tokenizer-list__item')[0].offsetTop -
+           document.getElementsByClassName("typeahead-selector filter-tokenizer-list__container")[0].getBoundingClientRect().height+30
+      }
+    });
   }
 
   navDown = () => {
