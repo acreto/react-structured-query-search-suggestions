@@ -1,6 +1,6 @@
 {
   "name": "react-structured-query-search-suggestions",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "react-structured-query-search with the provision to load incremental suggestions from the rest api",
   "author": "acreto",
   "repository": "acreto/react-structured-query-search-suggestions",

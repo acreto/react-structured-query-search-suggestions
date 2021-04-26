@@ -56,6 +56,39 @@ export default class TypeaheadTokenizer extends Component {
     };
     this.state.selected = this.getDefaultSelectedValue();
   }
+  returnOperator(operator){
+    if(['=', '!='].indexOf(operator)!==-1){
+      return operator === '=' ? '!=' : '='
+    }else if(['<', '>', '<=','>='].indexOf(operator)!==-1){
+      if(operator==='<'){
+        return '>='
+      }
+      if(operator==='>'){
+        return '<='
+      }
+      if(operator==='<='){
+        return '>'
+      }
+      if(operator==='>='){
+        return '<'
+      }
+    }else{
+      return operator
+    }
+  }
+
+  _getToken(s) {
+    const {onTokenAdd} = this.props
+    this.setState({
+      ...this.state,
+      selected: this.state.selected.map(item=>item.category !== s.category ?  item:{
+        ...item, 
+        operator: this.returnOperator(item.operator)
+      } )
+    },()=>{
+      onTokenAdd(this.state.selected);
+    })
+  }
 
   _renderTokens() {
     if (this.props.renderTokens) {
@@ -82,6 +115,14 @@ export default class TypeaheadTokenizer extends Component {
           fuzzySearchKeyAttribute={fuzzySearchKeyAttribute}
           fuzzySearchIdAttribute={this.props.fuzzySearchIdAttribute}
           onRemoveToken={this._removeTokenForValue}
+          {
+            ...(this.props.clickToToggleOperator 
+            ? {editToken : s=>{
+              this._getToken(s)
+            }}
+            : ({})
+            )
+          }
         >
           {selected}
         </Token>
@@ -101,11 +142,11 @@ export default class TypeaheadTokenizer extends Component {
       let categoryType = this._getCategoryType();
 
       if (categoryType == "text") {
-        return ["==", "!=", "contains", "!contains"];
+        return ["=", "!=", "contains", "!contains"];
       } else if (categoryType == "textoptions") {
-        return ["==", "!="];
+        return ["=", "!="];
       } else if (categoryType == "number" || categoryType == "date") {
-        return ["==", "!=", "<", "<=", ">", ">="];
+        return ["=", "!=", "<", "<=", ">", ">="];
       } else {
         console.log("WARNING: Unknown category type in tokenizer");
       }

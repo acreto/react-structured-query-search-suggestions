@@ -150,6 +150,24 @@ import "react-structured-query-search-suggestions/dist/index.css";
 	/>
 </Playground>
 
+## clickToToggleOperator
+
+<Playground>
+	<ReactStructuredQuerySearch
+		isAllowOperator={true}
+		categoryHeader="Custom Category"
+		options={[
+			{
+				category: "Country",
+				type: "textoptions",
+				options: ["India", "London"]
+			}
+		]}
+		onTokenAdd={val => console.log(val)}
+		clickToToggleOperator={true}
+	/>
+</Playground>
+
 ## operatorHeader
 
 <Playground>
