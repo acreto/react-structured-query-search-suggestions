@@ -1,6 +1,6 @@
 # react-structured-query-search-suggestions 🎉
 
-[![NPM](https://img.shields.io/badge/npm-v1.0.4-orange)](https://www.npmjs.com/package/react-structured-query-search-suggestions) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/badge/npm-v1.0.5-orange)](https://www.npmjs.com/package/react-structured-query-search-suggestions) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 react-structured-query-search-suggestions is a javascript library that provides autocomplete search queries with dynamic/static suggestions.
 This was inspired by [visualsearch](http://documentcloud.github.io/visualsearch), [react-structured-filter](https://github.com/SummitRoute/react-structured-filter) and [react-structured-query-search](https://github.com/kevalbhatt/react-structured-query-search).
@@ -68,6 +68,7 @@ import "react-structured-query-search-suggestions/dist/index.css";
 | :new: **disabled** | `Boolean`| `false` | Set to `true` for disabling the StructureQuerySearch |
 | :new: **defaultSelected**| `function, Array` | `[]` | Allows user to initialize the search with selected values (Include isAllowFreeSearch:true in the free search term selected option) |
 | :new: **categoryHeader** | `String, Component` | `"Category"` | Allows user the change the header title of `Category` |
+| :new: **clickToToggleOperator** | `Boolean` | `false` | Allows user to `toggle` operator in the selected token by clicking on it |
 | :new: **operatorHeader** | `String, Component` | `"Operator"` | Allows user the change the header title of `Operator` |
 | :new: **valueHeader** | `String, Component` | `"Value"` | Allows user the change the header title of `Value` |
 | :new: **isAllowSearchDropDownHeader** | `Boolean` | `"true"` | Allows user to `enable/disable` search drop-down header  |
@@ -95,7 +96,7 @@ import "react-structured-query-search-suggestions/dist/index.css";
 | Parameter | Type | Default | Required | Description|
 |:---------|:---- |:---- |:--------|:----------- | 
 | **category** | `String` ||`required` | Name of the first thing the user types.|
-| **type** | `String` |`text`||This can be one of the following:<ul><li><b>text</b>: Arbitrary text for the value. No autocomplete options.<ul><li>Operator choices will be: "==", "!=", "contains", "!contains".</li></ul> </li><li><b>textoptions</b>: You must additionally pass an <tt>options</tt> value</tt>. <ul><li>Operator choices will be: "==", "!=".</li></ul></li><li><b>number</b>: Arbitrary text for the value. No autocomplete options.<ul><li>Operator choices will be: "==", "!=", "&lt;", "&lt;=", "&gt;", "&gt;=".</li></ul> </li><li><b>date</b>: Shows a calendar and user can choose date and time.".<ul><li>Operator choices will be: "==", "!=", "&lt;", "&lt;=", "&gt;", "&gt;=".</li></ul></li></ul>|
+| **type** | `String` |`text`||This can be one of the following:<ul><li><b>text</b>: Arbitrary text for the value. No autocomplete options.<ul><li>Operator choices will be: "=", "!=", "contains", "!contains".</li></ul> </li><li><b>textoptions</b>: You must additionally pass an <tt>options</tt> value</tt>. <ul><li>Operator choices will be: "=", "!=".</li></ul></li><li><b>number</b>: Arbitrary text for the value. No autocomplete options.<ul><li>Operator choices will be: "=", "!=", "&lt;", "&lt;=", "&gt;", "&gt;=".</li></ul> </li><li><b>date</b>: Shows a calendar and user can choose date and time.".<ul><li>Operator choices will be: "=", "!=", "&lt;", "&lt;=", "&gt;", "&gt;=".</li></ul></li></ul>|
 | :new: **operator** | `Array, function` | | required, if  `isAllowOperator` prop is set to `true`| If this attribute is added then it would ignore the type check as described in `type` parameter and it would accept what you have passed|
 | **options** | `Array` | |`required, if type="textoptions"` | Get the value according to selected category |
 | **dynamicOptions** | `Boolean` | false | | A boolean which if set to true, dynamic search suggestions(options) will be loaded using fetchData function. If set to false, static options will be served|

@@ -18,14 +18,14 @@ export default class App extends Component {
 				{
 					category: "Symbol",
 					type: "textoptions",
-					operator: ["==", "!="],
+					operator: ["=", "!="],
 					options: ['example1', 'example2'],
 					dynamicOptions:true
 				},
 				{
 					category: "Non Dynamic",
 					type: "textoptions",
-					operator: ["==", "!="],
+					operator: ["=", "!="],
 					options: ['example1', 'example2'],
 				},
 				{ category: "Price", type: "number" },
@@ -129,6 +129,7 @@ export default class App extends Component {
 						listItem: "filter-tokenizer-list__item"
 					}}
 					fetchData={this.searchCharacters}
+					clickToToggleOperator={false}
 				/>
 			</div>
 		);

@@ -142,11 +142,11 @@ export default class TypeaheadTokenizer extends Component {
       let categoryType = this._getCategoryType();
 
       if (categoryType == "text") {
-        return ["==", "!=", "contains", "!contains"];
+        return ["=", "!=", "contains", "!contains"];
       } else if (categoryType == "textoptions") {
-        return ["==", "!="];
+        return ["=", "!="];
       } else if (categoryType == "number" || categoryType == "date") {
-        return ["==", "!=", "<", "<=", ">", ">="];
+        return ["=", "!=", "<", "<=", ">", ">="];
       } else {
         console.log("WARNING: Unknown category type in tokenizer");
       }
