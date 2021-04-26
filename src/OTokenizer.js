@@ -410,6 +410,7 @@ export default class OTokenizer extends Tokenizer {
 				fromTokenizer={true}
 				dynamicOptions={this._getIsFetchDynamicOptions()}
 				fetchData={(searchString)=>{this.props.fetchData(this.state.category, searchString)}}
+				clickToToggleOperator={this.props.clickToToggleOperator || false}
 			/>
 		);
 	}
