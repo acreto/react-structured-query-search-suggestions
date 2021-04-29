@@ -20,6 +20,7 @@ export default class Token extends Component {
       <a
         className='typeahead-token-close'
         href='javascript:void(0)'
+        title="Click to delete filter"
         onClick={(event) => {
           this.props.onRemoveToken(this.props.children)
           event.preventDefault()
@@ -47,14 +48,18 @@ export default class Token extends Component {
       if (val['isAllowFreeSearch']) {
         return this.getTokenValue()
       }
-      return `${val['category']} ${val.operator == undefined ? '' : val.operator} "${this.getTokenValue()}" `
+      return <div className="token">
+          <span>{`${val['category']}`}</span>
+          <span>{`${val.operator == undefined ? '' : val.operator}`}</span>
+          <span>{`${this.getTokenValue()}`}</span>
+        </div>
     }
   }
 
   render() {
     return (
       <div className='typeahead-token'
-        title={this.props.editToken ? 'Click to toggle the operator' : ''}
+        title={this.props.editToken ? 'Click to edit the filter' : ''}
         onClick={() => {
           if (this.props.editToken) {
             this.props.editToken(this.props.children)

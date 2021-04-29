@@ -129,7 +129,7 @@ export default class App extends Component {
 						listItem: "filter-tokenizer-list__item"
 					}}
 					fetchData={this.searchCharacters}
-					clickToToggleOperator={false}
+					clickToEditToken
 				/>
 			</div>
 		);

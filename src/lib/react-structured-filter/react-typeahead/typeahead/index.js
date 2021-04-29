@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import propTypes from "prop-types";
-import moment from "moment";
 
 import TypeaheadSelector from "./selector";
 import KeyEvent from "../keyevent";
@@ -127,6 +126,14 @@ export default class Typeahead extends Component {
       this.entryRef.value = value;
     }
     this._onTextEntryUpdated();
+  }
+
+  setEntryTextAndFocus(value) {
+    if (this.entryRef != null) {
+      this.entryRef.value = value;
+    }
+    this._onTextEntryUpdated();
+    this._onFocus()
   }
 
   _renderIncrementalSearchResults() {
@@ -275,6 +282,7 @@ export default class Typeahead extends Component {
   };
 
   _onFocus = event => {
+    this.props.onElementFocused({ focused: true });
     if (this.props.onElementFocused) {
       this.props.onElementFocused({ focused: true });
     } else {

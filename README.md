@@ -1,6 +1,6 @@
 # react-structured-query-search-suggestions 🎉
 
-[![NPM](https://img.shields.io/badge/npm-v1.0.5-orange)](https://www.npmjs.com/package/react-structured-query-search-suggestions) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/badge/npm-v1.0.6-orange)](https://www.npmjs.com/package/react-structured-query-search-suggestions) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 react-structured-query-search-suggestions is a javascript library that provides autocomplete search queries with dynamic/static suggestions.
 This was inspired by [visualsearch](http://documentcloud.github.io/visualsearch), [react-structured-filter](https://github.com/SummitRoute/react-structured-filter) and [react-structured-query-search](https://github.com/kevalbhatt/react-structured-query-search).
@@ -68,7 +68,7 @@ import "react-structured-query-search-suggestions/dist/index.css";
 | :new: **disabled** | `Boolean`| `false` | Set to `true` for disabling the StructureQuerySearch |
 | :new: **defaultSelected**| `function, Array` | `[]` | Allows user to initialize the search with selected values (Include isAllowFreeSearch:true in the free search term selected option) |
 | :new: **categoryHeader** | `String, Component` | `"Category"` | Allows user the change the header title of `Category` |
-| :new: **clickToToggleOperator** | `Boolean` | `false` | Allows user to `toggle` operator in the selected token by clicking on it |
+| :new: **clickToEditToken** | `Boolean` | `false` | Allows user to `edit` the selected token by clicking on it |
 | :new: **operatorHeader** | `String, Component` | `"Operator"` | Allows user the change the header title of `Operator` |
 | :new: **valueHeader** | `String, Component` | `"Value"` | Allows user the change the header title of `Value` |
 | :new: **isAllowSearchDropDownHeader** | `Boolean` | `"true"` | Allows user to `enable/disable` search drop-down header  |

@@ -170,6 +170,12 @@
 		margin: 5px;
 		padding: 5px;
 		font-weight: bold;
+		.token{
+			span{
+				margin: 0 3px;
+				padding: 0 1px;
+			}
+		}
 	}
 	ul.typeahead-selector {
 		z-index: 100;
