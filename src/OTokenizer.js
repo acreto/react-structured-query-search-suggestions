@@ -47,7 +47,7 @@ export default class OTokenizer extends Tokenizer {
 	    const node = ReactDOM.findDOMNode(this)
 	    if (
 	      (node && node.contains(e.target)) ||
-				((e.target && e.target.closest('.typeahead-option')) || e.target.className === 'typeahead-token-close' || e.target.className === 'typeahead-token')
+				((e.target && e.target.closest('.typeahead-option')) || e.target.className === 'typeahead-token-close' || e.target.closest('.typeahead-token'))
 	    ) {
 	      return
 	    }
