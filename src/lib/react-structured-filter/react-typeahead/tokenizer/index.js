@@ -56,38 +56,31 @@ export default class TypeaheadTokenizer extends Component {
     };
     this.state.selected = this.getDefaultSelectedValue();
   }
-  returnOperator(operator){
-    if(['=', '!='].indexOf(operator)!==-1){
-      return operator === '=' ? '!=' : '='
-    }else if(['<', '>', '<=','>='].indexOf(operator)!==-1){
-      if(operator==='<'){
-        return '>='
-      }
-      if(operator==='>'){
-        return '<='
-      }
-      if(operator==='<='){
-        return '>'
-      }
-      if(operator==='>='){
-        return '<'
-      }
-    }else{
-      return operator
-    }
-  }
 
   _getToken(s) {
     const {onTokenAdd} = this.props
-    this.setState({
-      ...this.state,
-      selected: this.state.selected.map(item=>item.category !== s.category ?  item:{
-        ...item, 
-        operator: this.returnOperator(item.operator)
-      } )
-    },()=>{
-      onTokenAdd(this.state.selected);
-    })
+    if(this.state.selected.find(item=>item.category === s.category)){
+      this.setState({
+        ...this.state,
+        selected: this.state.selected.filter(item=>item.category !== s.category),
+        ...(this.state.selected.find(item=>item.category === s.category).isAllowFreeSearch ? 
+        {
+          isAllowFreeSearch:false,
+        }:{
+          operator: this.state.selected.find(item=>item.category === s.category).operator,
+          category: this.state.selected.find(item=>item.category === s.category).category,
+        }
+        ),
+        val: this.state.selected.find(item=>item.category === s.category).value,
+      },()=>{
+        let val = this.state.val
+        if(typeof val === 'object'){
+          val = this.state.val.key
+        }
+        onTokenAdd(this.state.selected);
+        this.typeaheadRef.setEntryTextAndFocus(val)
+      })
+    }
   }
 
   _renderTokens() {
@@ -116,7 +109,7 @@ export default class TypeaheadTokenizer extends Component {
           fuzzySearchIdAttribute={this.props.fuzzySearchIdAttribute}
           onRemoveToken={this._removeTokenForValue}
           {
-            ...(this.props.clickToToggleOperator 
+            ...(this.props.clickToEditToken 
             ? {editToken : s=>{
               this._getToken(s)
             }}

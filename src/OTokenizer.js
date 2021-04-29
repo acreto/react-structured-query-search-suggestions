@@ -47,18 +47,19 @@ export default class OTokenizer extends Tokenizer {
 	    const node = ReactDOM.findDOMNode(this)
 	    if (
 	      (node && node.contains(e.target)) ||
-				((e.target && e.target.closest('.typeahead-option')) || e.target.className == 'typeahead-token-close')
+				((e.target && e.target.closest('.typeahead-option')) || e.target.className === 'typeahead-token-close' || e.target.className === 'typeahead-token')
 	    ) {
 	      return
 	    }
 	    if (this.state.focused === true) {
-	      this.setState({ focused: false })
+		  this.setState({ focused: false })
 	    }
 	  }
 	};
 
+	
 	onElementFocused = val => {
-	  this.setState(val)
+		this.setState(val)
 	};
 
 	_getCategoryOperator() {
@@ -407,7 +408,7 @@ export default class OTokenizer extends Tokenizer {
   fromTokenizer={true}
   dynamicOptions={this._getIsFetchDynamicOptions()}
   fetchData={(searchString) => { this.props.fetchData(this.state.category, searchString) }}
-  clickToToggleOperator={this.props.clickToToggleOperator || false}
+  clickToEditToken={this.props.clickToEditToken || false}
 	    />
 	  )
 	}
